@@ -1,0 +1,21 @@
+<div>
+  <nav class="navbar navbar-dark bg-dark main-nav">
+    <a class="navbar-brand title" href="/" matTooltip="Retournez à l'accueil">Poly Repas</a>
+    <div class="navbar-expand mr-auto">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" routerLink="/add-meal-plan">Ajouter un plan</a>
+        <a class="nav-item nav-link active" routerLink="/modify">Modifier un plan existant</a>
+        <a class="nav-item nav-link active" routerLink="/delete">Supprimer un plan</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="home" *ngIf="route == ''">
+    <p>
+      Bienvenue à PolyRepas !
+    </p>
+    <button mat-raised-button color="primary" class="btn" routerLink="/plansRepas">Voir les plans repas disponibles<mat-icon>arrow_right</mat-icon></button>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

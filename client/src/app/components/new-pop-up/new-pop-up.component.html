@@ -1,0 +1,68 @@
+<h1 mat-dialog-title align="center">Ajouter un nouveau plan repas</h1>
+<form [formGroup]="formGroup" id="form" novalidate>
+    <mat-form-field appearance="fill">
+        <mat-label>Catégorie du plan</mat-label>
+        <input matInput type="text" maxlength="20" [(ngModel)]="category" formControlName='categoryControl'/>
+        <button *ngIf="category" matSuffix mat-icon-button aria-label="Clear" (click)="category = ''">
+            <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint align="end"> {{ category.length || 0 }} / 20</mat-hint>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre de personnes</mat-label>
+        <input matInput type='number' [(ngModel)]="people" formControlName='nbrPeopleControl'/>
+        <mat-error *ngIf="formGroup.controls.nbrPeopleControl.errors?.min" [ngClass] = "'error'"> Le nombre de personnes doit être  strictement positif.</mat-error>
+        <mat-error *ngIf="formGroup.controls.nbrPeopleControl.errors?.pattern" [ngClass] = "'error'"> Le nombre de personnes doit être  un nombre entier.</mat-error>
+        <button *ngIf="people" matSuffix mat-icon-button aria-label="Clear" (click)="people = 1">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    
+
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre de calories</mat-label>
+        <input matInput type='number' [(ngModel)]="calories" formControlName='nbrCaloriesControl'/>
+        <mat-error *ngIf="formGroup.controls.nbrCaloriesControl.errors?.min" [ngClass] = "'error'"> Les calories doivent  être  strictement positifs.</mat-error>
+        <mat-error *ngIf="formGroup.controls.nbrCaloriesControl.errors?.pattern" [ngClass] = "'error'"> Le nombre de calories doit être  un nombre entier.</mat-error>
+        <button *ngIf="calories" matSuffix mat-icon-button aria-label="Clear" (click)="calories = 1">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Fréquence du plan </mat-label>
+        <input matInput type="number" [(ngModel)]="frequency" formControlName='frequencyControl'/>
+        <mat-error *ngIf="formGroup.controls.frequencyControl.errors" [ngClass] = "'error'"> La fréquence accepte seulement chiffres entiers positifs  .</mat-error>
+        <button *ngIf="frequency" matSuffix mat-icon-button aria-label="Clear" (click)="frequency = 1">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Prix du plan</mat-label>
+        <input matInput type='number' [(ngModel)]="price" formControlName='priceControl'/>
+        <mat-error *ngIf="formGroup.controls.priceControl.errors?.pattern" [ngClass] = "'error'"> Le prix ne doit pas avoir plus que deux chiffres après la virgule</mat-error>
+        <mat-error *ngIf="formGroup.controls.priceControl.errors?.min" [ngClass] = "'error'"> Le prix doit être strictement positif</mat-error>
+        <button *ngIf="price" matSuffix mat-icon-button aria-label="Clear" (click)="price = 0.01">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" >
+        <mat-label>Numero du fournisseur</mat-label>
+        <mat-select type='number'  [(value)]="vendor" formControlName="vendorControl"> 
+            <mat-option *ngFor="let vendorId of vendors" [value]="vendorId">
+                {{vendorId}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</form>
+
+<div id="button-area" mat-dialog-actions>
+    <button mat-raised-button color="warn" mat-dialog-close>Fermer</button>
+    <button *ngIf="!this.data.mealPlan" [disabled]="!formGroup.valid" mat-raised-button color="primary"  (click)="addMealPlan()" >Ajouter</button>
+    <button *ngIf="this.data.mealPlan" [disabled]="!formGroup.valid" mat-raised-button color="primary" (click)="modifyMealPlan()" >Modifier</button>
+</div>
